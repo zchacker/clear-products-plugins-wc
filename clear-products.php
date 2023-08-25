@@ -44,25 +44,25 @@ function my_plugin_run_sql_command() {
     // Run your SQL command here
     $result = $wpdb->query("
             DELETE relations.*, taxes.*, terms.*
-            FROM wp_term_relationships AS relations
-            INNER JOIN wp_term_taxonomy AS taxes
+            FROM wp_ahmed_term_relationships AS relations
+            INNER JOIN wp_ahmed_term_taxonomy AS taxes
             ON relations.term_taxonomy_id = taxes.term_taxonomy_id
-            INNER JOIN wp_terms AS terms
+            INNER JOIN wp_ahmed_terms AS terms
             ON taxes.term_id = terms.term_id
             WHERE object_id IN (
-            SELECT ID FROM wp_posts WHERE post_type IN ('product','product_variation')
+                SELECT ID FROM wp_ahmed_posts WHERE post_type IN ('product','product_variation')
             )
             AND object_id NOT IN (127000028192,127000028195,127000028198,127000028200,127000028202,127000028204);
     ");
 
     $wpdb->query("
-        DELETE FROM wp_postmeta WHERE post_id IN (
+        DELETE FROM wp_ahmed_postmeta WHERE post_id IN (
             SELECT ID FROM wp_posts WHERE post_type IN ('product','product_variation')
             AND ID NOT IN (127000028192,127000028195,127000028198,127000028200,127000028202,127000028204) 
         );
     ");
     $wpdb->query("
-        DELETE FROM wp_posts WHERE post_type IN ('product','product_variation')
+        DELETE FROM wp_ahmed_posts WHERE post_type IN ('product','product_variation')
         AND ID NOT IN (127000028192,127000028195,127000028198,127000028200,127000028202,127000028204);
     ");
 
